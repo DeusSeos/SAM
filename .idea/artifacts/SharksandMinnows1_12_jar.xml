@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SharksandMinnows1.12:jar">
+    <output-path>$USER_HOME$/Desktop/Heavens Rift Plugins</output-path>
+    <root id="archive" name="SharksandMinnows1.12.jar">
+      <element id="module-output" name="SharksandMinnows1.12" />
+    </root>
+  </artifact>
+</component>

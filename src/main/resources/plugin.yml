@@ -1,0 +1,9 @@
+name: SAM
+version: ${project.version}
+main: hr.seos.sam.SAM
+authors: [Seoss, 21943second]
+description: A Sharks and Minnows Minigame
+commands:
+  sam:
+    description: A Minigame Command
+    usage: /sam <args>
