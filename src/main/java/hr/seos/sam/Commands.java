@@ -29,7 +29,7 @@ public class Commands implements CommandExecutor {
                     sender.sendMessage(ChatColor.GREEN + "/sam end: " + ChatColor.LIGHT_PURPLE + "Teleports you to Shark Spawn");
                     sender.sendMessage(ChatColor.GREEN + "/sam tpm: " + ChatColor.LIGHT_PURPLE + "Teleports you to Minnow Spawn");
                 }
-                if (args.length == 1) {
+                if (args.length >= 1) {
                     if (args[0].equalsIgnoreCase("start")) {
                         if (Bukkit.getOnlinePlayers().size() > 1) {
                             //int rounds;
@@ -164,8 +164,21 @@ public class Commands implements CommandExecutor {
                         }
                         return true;
                     }
-                    if (args[0].equalsIgnoreCase("item")){
+                    if (args[0].equalsIgnoreCase("register")){
+                        plugin.getConfig().set("item."+ args[1] , args[1]);
+                        plugin.saveConfig();
+                        sender.sendMessage(ChatColor.GREEN + "Registering SAM Item: " + ChatColor.LIGHT_PURPLE + args[1]);
+                    }
 
+
+                    if (args[0].equalsIgnoreCase("item")){
+                        if (sender instanceof Player) {
+                            String name = plugin.getConfig().getString("item." + args[1]);
+                            sender.sendMessage(ChatColor.GREEN + "Giving you SAM item: " + ChatColor.LIGHT_PURPLE + name);
+                        }
+                        else {
+                            sender.sendMessage(ChatColor.RED + "This command is only for players");
+                        }
                     }
                     return true;
                 }
