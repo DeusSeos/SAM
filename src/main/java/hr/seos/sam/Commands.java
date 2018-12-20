@@ -50,6 +50,7 @@ public class Commands implements CommandExecutor {
                         Integer random = ThreadLocalRandom.current().nextInt(playerList.size());
 
                         Player shark = Bukkit.getPlayer(playerList.get(random));
+                        plugin.shark = shark;
 
                         sender.sendMessage(ChatColor.GREEN + "The Shark is: " + ChatColor.LIGHT_PURPLE + shark.getName());
 
