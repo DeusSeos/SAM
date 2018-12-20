@@ -5,7 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
+import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -34,7 +34,6 @@ public class Commands implements CommandExecutor {
                 }
                 if (args.length >= 1) {
                     String arg = args[0].toLowerCase();
-
                     if (arg.equals("start")) {
                         if (Bukkit.getOnlinePlayers().size() <= 1) {
                             sender.sendMessage(ChatColor.RED + "Not enough players, unable to start SAM");
@@ -42,6 +41,8 @@ public class Commands implements CommandExecutor {
                         }
                         //int rounds;
                         //sender.sendMessage("How many rounds?");
+
+                        plugin.running = true;
                         playerList.clear();
                         for (Player player : Bukkit.getOnlinePlayers()) {
                             playerList.add(player.getName());
@@ -131,7 +132,7 @@ public class Commands implements CommandExecutor {
 
                         return true;
                     }
-                    if (arg.equals("tps")) {
+                    if (arg.equals("tpm")) {
 
                         Player player = (Player) sender;
                         World world = Bukkit.getWorld(plugin.getConfig().getString("mspawn.world"));
@@ -145,7 +146,7 @@ public class Commands implements CommandExecutor {
 
                         return true;
                     }
-                    if (arg.equals("tpm")) {
+                    if (arg.equals("tps")) {
 
                         Player player = (Player) sender;
                         World world = Bukkit.getWorld(plugin.getConfig().getString("sspawn.world"));
@@ -155,22 +156,28 @@ public class Commands implements CommandExecutor {
                         Double dyaw = plugin.getConfig().getDouble("sspawn.yaw");
                         Float yaw = dyaw.floatValue();
                         player.teleport(new Location(world, x, y, z, yaw, 0f));
-                        sender.sendMessage(ChatColor.GREEN + "Sending you to " + ChatColor.LIGHT_PURPLE + "playerList spawn");
+                        sender.sendMessage(ChatColor.GREEN + "Sending you to " + ChatColor.LIGHT_PURPLE + "shark spawn");
 
                         return true;
                     }
                     if (arg.equals("register")) {
-
                         Player player = (Player) sender;
-                        plugin.getConfig().set("item." + args[1], player.getInventory().getItemInMainHand().getItemMeta().getLocalizedName());
-                        plugin.saveConfig();
+                        ItemStack MainHand = player.getInventory().getItemInMainHand();
+                        String path = "item." + args[1];
+                        String name = MainHand.getType().name();
+                        plugin.getConfig().set(path , name);
+                        plugin.getConfig().set(path + ".displayname" , MainHand.getItemMeta().getDisplayName());
+                        plugin.getConfig().set(path + ".material", name);
                         sender.sendMessage(ChatColor.GREEN + "Registering SAM Item: " + ChatColor.LIGHT_PURPLE + args[1]);
+                        plugin.saveConfig();
 
                     }
                     if (arg.equals("item")) {
-
+                        String path = "item." + args[1];
                         String name = plugin.getConfig().getString("item." + args[1]);
                         sender.sendMessage(ChatColor.GREEN + "Giving you SAM item: " + ChatColor.LIGHT_PURPLE + name);
+                        String material = plugin.getConfig().getString("path.material");
+                        //ItemStack item = new ItemStack(Material.material);
 
                     }
 
